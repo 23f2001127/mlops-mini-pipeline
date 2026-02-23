@@ -57,7 +57,8 @@ and print metrics to terminal.
 
 metrics.json format:
 
-```{
+```
+{
   "version": "v1",
   "rows_processed": 10000,
   "metric": "signal_rate",
