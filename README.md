@@ -56,6 +56,7 @@ The container will:
 
 Example metrics.json:
 
+```
 {
   "version": "v1",
   "rows_processed": 10000,
@@ -65,6 +66,7 @@ Example metrics.json:
   "seed": 42,
   "status": "success"
 }
+```
 
 ------------------------------------------------------------
 
