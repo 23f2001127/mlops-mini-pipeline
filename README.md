@@ -25,11 +25,11 @@ It demonstrates:
 
 ## Setup (Local)
 
-Install dependencies:
+**Install dependencies:**
 
 pip install -r requirements.txt
 
-Run the pipeline:
+**Run the pipeline:**
 
 python run.py --input data.csv --config config.yaml --output metrics.json --log-file run.log
 
@@ -37,15 +37,15 @@ python run.py --input data.csv --config config.yaml --output metrics.json --log-
 
 ## Docker
 
-Build image:
+**Build image:**
 
 docker build -t mlops-task .
 
-Run container:
+**Run container:**
 
 docker run --rm mlops-task
 
-The container will:
+**The container will:**
 - Generate metrics.json
 - Generate run.log
 - Print metrics to terminal
@@ -80,18 +80,18 @@ Example metrics.json:
 
 ## Design Choices
 
-Rolling Mean Signal  
+**Rolling Mean Signal:**  
 A rolling mean of the close price is used as a simple deterministic baseline signal.  
 Signal = 1 if close > rolling_mean, else 0.
 
-Handling Initial Rows  
+**Handling Initial Rows:**  
 The first window-1 rows produce NaN rolling means. These rows are assigned signal = 0 to keep behavior deterministic.
 
-Reproducibility  
+**Reproducibility:**  
 All parameters (seed, window, version) are loaded from config.yaml.  
 No hard-coded values are used.
 
-Error Handling  
+**Error Handling:**  
 The pipeline validates:
 - Missing input file  
 - Invalid CSV format  
@@ -101,14 +101,14 @@ The pipeline validates:
 
 Errors are written to metrics.json and run.log.
 
-Dockerization  
+**Dockerization:**  
 Docker ensures consistent execution environment and reproducible runs across machines with a single command.
 
 ------------------------------------------------------------
 
 ## Notes
 
-This project demonstrates core ML engineering practices:
+**This project demonstrates core ML engineering practices:**
 - Config-driven pipelines
 - Structured logging
 - Deterministic runs
