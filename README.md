@@ -6,12 +6,12 @@ It demonstrates:
 - Deterministic execution using config.yaml
 - Rolling mean signal generation
 - Structured metrics output (metrics.json)
-- Logging (run.log)
-- Docker containerization
+- Detailed logging (run.log)
+- Docker containerization for reproducibility
 
----
+------------------------------------------------------------
 
-## 📂 Files
+## Files
 
 - run.py – Main pipeline script  
 - config.yaml – Configuration file  
@@ -21,9 +21,9 @@ It demonstrates:
 - metrics.json – Example output  
 - run.log – Example logs  
 
----
+------------------------------------------------------------
 
-## ⚙️ Setup (Local)
+## Setup (Local)
 
 Install dependencies:
 
@@ -33,9 +33,9 @@ Run the pipeline:
 
 python run.py --input data.csv --config config.yaml --output metrics.json --log-file run.log
 
----
+------------------------------------------------------------
 
-## 🐳 Docker
+## Docker
 
 Build image:
 
@@ -45,19 +45,17 @@ Run container:
 
 docker run --rm mlops-task
 
-The container will generate:
-- metrics.json
-- run.log
+The container will:
+- Generate metrics.json
+- Generate run.log
+- Print metrics to terminal
 
-and print metrics to terminal.
+------------------------------------------------------------
 
----
+## Expected Output
 
-## 📊 Expected Output
+Example metrics.json:
 
-metrics.json format:
-
-```
 {
   "version": "v1",
   "rows_processed": 10000,
@@ -67,18 +65,50 @@ metrics.json format:
   "seed": 42,
   "status": "success"
 }
-```
 
----
+------------------------------------------------------------
 
-## 📦 Dependencies
+## Dependencies
 
 - pandas
 - numpy
 - pyyaml
 
----
+------------------------------------------------------------
 
-## 🧠 Notes
+## Design Choices
 
-This project demonstrates reproducibility, logging, and containerized batch ML pipelines.
+Rolling Mean Signal  
+A rolling mean of the close price is used as a simple deterministic baseline signal.  
+Signal = 1 if close > rolling_mean, else 0.
+
+Handling Initial Rows  
+The first window-1 rows produce NaN rolling means. These rows are assigned signal = 0 to keep behavior deterministic.
+
+Reproducibility  
+All parameters (seed, window, version) are loaded from config.yaml.  
+No hard-coded values are used.
+
+Error Handling  
+The pipeline validates:
+- Missing input file  
+- Invalid CSV format  
+- Empty dataset  
+- Missing close column  
+- Invalid config  
+
+Errors are written to metrics.json and run.log.
+
+Dockerization  
+Docker ensures consistent execution environment and reproducible runs across machines with a single command.
+
+------------------------------------------------------------
+
+## Notes
+
+This project demonstrates core ML engineering practices:
+- Config-driven pipelines
+- Structured logging
+- Deterministic runs
+- Containerized deployment
+- Machine-readable metrics
